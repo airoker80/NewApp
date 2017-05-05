@@ -19,6 +19,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.harati.np.newapp.Fragment.BookFragment;
+import com.harati.np.newapp.Fragment.MyActivityFragment;
+import com.harati.np.newapp.Fragment.PracticeFragment;
+import com.harati.np.newapp.Fragment.QuizFragment;
+import com.harati.np.newapp.Fragment.SyllabusFragment;
 import com.harati.np.newapp.R;
 
 import butterknife.BindView;
@@ -35,10 +39,26 @@ public class MainActivity extends AppCompatActivity
         setCurrentFragment(false,R.id.books,"Books");
         closeDrawer();
     }
-    @OnClick(R.id.practice) void showPractice(){}
-    @OnClick(R.id.quiz) void showQuiz(){}
-    @OnClick(R.id.my_activity) void show_my_activity (){}
-    @OnClick(R.id.syllabus) void show_syllabus (){}
+    @OnClick(R.id.practice) void showPractice(){
+        fragment = new PracticeFragment();
+        setCurrentFragment(false,R.id.books,"Books");
+        closeDrawer();
+    }
+    @OnClick(R.id.quiz) void showQuiz(){
+        fragment = new QuizFragment();
+        setCurrentFragment(false,R.id.books,"Books");
+        closeDrawer();
+    }
+    @OnClick(R.id.my_activity) void show_my_activity (){
+        fragment = new MyActivityFragment();
+        setCurrentFragment(false,R.id.books,"Books");
+        closeDrawer();
+    }
+    @OnClick(R.id.syllabus) void show_syllabus (){
+        fragment = new SyllabusFragment();
+        setCurrentFragment(false,R.id.books,"Books");
+        closeDrawer();
+    }
     @OnClick(R.id.logout) void logout (){}
     public void closeDrawer(){
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
