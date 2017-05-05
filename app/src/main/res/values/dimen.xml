@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_item_size">17sp</dimen>
+    <dimen name="nav_space">8dp</dimen>
+    <dimen name="margin_list_item">8dp</dimen>
+</resources>

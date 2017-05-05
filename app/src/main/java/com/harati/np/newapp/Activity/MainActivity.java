@@ -1,8 +1,12 @@
-package com.harati.np.newapp;
+package com.harati.np.newapp.Activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,10 +16,50 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.harati.np.newapp.Fragment.BookFragment;
+import com.harati.np.newapp.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Fragment fragment=null;
 
+    @OnClick(R.id.books) void showBooks(){
+        fragment = new BookFragment();
+        setCurrentFragment(false,R.id.books,"Books");
+        closeDrawer();
+    }
+    @OnClick(R.id.practice) void showPractice(){}
+    @OnClick(R.id.quiz) void showQuiz(){}
+    @OnClick(R.id.my_activity) void show_my_activity (){}
+    @OnClick(R.id.syllabus) void show_syllabus (){}
+    @OnClick(R.id.logout) void logout (){}
+    public void closeDrawer(){
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+    public void setCurrentFragment(Boolean saveFragmentBackstack, int id, String backPageName){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (saveFragmentBackstack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+
+        if(backPageName.length()>0){
+            Bundle args = new Bundle();
+            args.putString("returnPage",backPageName);
+            fragment.setArguments(args);
+        }
+        fragmentTransaction.replace(R.id.content_frame, fragment,String.valueOf(id)+"tag");
+        fragmentTransaction.commit();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,14 +67,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+      /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,6 +84,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -97,5 +142,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    View currentSelectedPage;
+    public void resetSelectedPageDrawable(View selectedView){
+        if(currentSelectedPage!=null){
+            currentSelectedPage.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.nav_menu_normal_state));
+        }
+        currentSelectedPage = selectedView;
+        currentSelectedPage.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.nav_menu_selected_item));
     }
 }
