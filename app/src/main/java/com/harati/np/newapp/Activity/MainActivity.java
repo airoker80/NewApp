@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.harati.np.newapp.Fragment.BookFragment;
 import com.harati.np.newapp.Fragment.MyActivityFragment;
 import com.harati.np.newapp.Fragment.PracticeFragment;
+import com.harati.np.newapp.Fragment.QuestionFragment;
 import com.harati.np.newapp.Fragment.QuizFragment;
 import com.harati.np.newapp.Fragment.SyllabusFragment;
 import com.harati.np.newapp.R;
@@ -34,29 +35,48 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Fragment fragment=null;
 
+    @BindView(R.id.books) TextView books;
+    @BindView(R.id.my_activity) TextView my_activity;
+    @BindView(R.id.practice) TextView practice;
+    @BindView(R.id.questions) TextView questions;
+    @BindView(R.id.quiz) TextView quiz;
+    @BindView(R.id.syllabus) TextView syllabus;
+
+
     @OnClick(R.id.books) void showBooks(){
         fragment = new BookFragment();
         setCurrentFragment(false,R.id.books,"Books");
+        resetSelectedPageDrawable(books);
+        closeDrawer();
+    }
+    @OnClick(R.id.questions) void showquestions(){
+        fragment = new QuestionFragment();
+        setCurrentFragment(false,R.id.books,"Books");
+        resetSelectedPageDrawable(questions);
         closeDrawer();
     }
     @OnClick(R.id.practice) void showPractice(){
         fragment = new PracticeFragment();
         setCurrentFragment(false,R.id.books,"Books");
+        resetSelectedPageDrawable(practice);
         closeDrawer();
     }
     @OnClick(R.id.quiz) void showQuiz(){
         fragment = new QuizFragment();
         setCurrentFragment(false,R.id.books,"Books");
+        resetSelectedPageDrawable(quiz);
         closeDrawer();
     }
     @OnClick(R.id.my_activity) void show_my_activity (){
         fragment = new MyActivityFragment();
         setCurrentFragment(false,R.id.books,"Books");
+        resetSelectedPageDrawable(my_activity);
         closeDrawer();
     }
     @OnClick(R.id.syllabus) void show_syllabus (){
         fragment = new SyllabusFragment();
         setCurrentFragment(false,R.id.books,"Books");
+        resetSelectedPageDrawable(syllabus);
         closeDrawer();
     }
     @OnClick(R.id.logout) void logout (){}
