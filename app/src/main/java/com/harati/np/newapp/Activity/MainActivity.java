@@ -1,5 +1,7 @@
 package com.harati.np.newapp.Activity;
 
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.harati.np.newapp.Fragment.BookFragment;
+import com.harati.np.newapp.Fragment.DefaultDashboardFragment;
 import com.harati.np.newapp.Fragment.MyActivityFragment;
 import com.harati.np.newapp.Fragment.PracticeFragment;
 import com.harati.np.newapp.Fragment.QuestionFragment;
@@ -41,8 +44,15 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.questions) TextView questions;
     @BindView(R.id.quiz) TextView quiz;
     @BindView(R.id.syllabus) TextView syllabus;
+    @BindView(R.id.dashboard) TextView dashboard;
 
 
+    @OnClick(R.id.dashboard) void dashboard(){
+        fragment = new DefaultDashboardFragment();
+        setCurrentFragment(false,R.id.books,"Books");
+        resetSelectedPageDrawable(dashboard);
+        closeDrawer();
+    }
     @OnClick(R.id.books) void showBooks(){
         fragment = new BookFragment();
         setCurrentFragment(false,R.id.books,"Books");
@@ -107,6 +117,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        fragment = new DefaultDashboardFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame, fragment,"");
+        fragmentTransaction.commit();
+
       /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +156,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -149,14 +166,22 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        Drawable drawable = item.getIcon();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.upload:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
