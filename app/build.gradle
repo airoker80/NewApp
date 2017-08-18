@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'realm-android'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -21,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -30,6 +29,17 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.itextpdf:itext-pdfa:5.5.5'
     testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile files('libs/DynamicPDF.jar')
+//    compile files('libs/itext-2.1.7.zip')
+    compile files('libs/commons-beanutils-1.8.2.jar')
+    compile files('libs/commons-collections-3.2.1.jar')
+    compile files('libs/commons-digester-2.1.jar')
+    compile files('libs/commons-logging-1.1.1.jar')
+    compile files('libs/itext-2.1.7.jar')
+    compile files('libs/jasperreports-5.0.1.jar')
+    compile files('libs/jcommon-1.0.15.jar')
+    compile files('libs/jfreechart-1.0.12.jar')
 }
